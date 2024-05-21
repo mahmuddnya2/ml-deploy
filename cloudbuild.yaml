@@ -14,7 +14,7 @@ steps:
     args:
       - "run"
       - "deploy"
-      - "api-model"
+      - "api-service-backend"
       - "--image=us-central1-docker.pkg.dev/$PROJECT_ID/ml-deploy-artifact/model-image-last"
       - "--region=us-central1"
       - "--cpu=1"
