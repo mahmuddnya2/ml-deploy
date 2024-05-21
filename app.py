@@ -8,13 +8,13 @@ from flask import Flask, jsonify, request
 from google.cloud import storage
 from dotenv import load_dotenv
 from werkzeug.utils import secure_filename
-os.environ['TF_CPP_MAIN_LOG_LEVEL'] = '3'
+os.environ['TF_CPP_MIN_LOG_LEVEL'] = '3'
 
 load_dotenv()
 
 app = Flask(__name__)
 
-app.config['ALLOWED_EXTENSIONS'] = set(['png', 'jpg', 'jpeg'])
+app.config['ALLOWED_EXTENSIONS'] = set(["png", "jpg", "jpeg"])
 app.config['UPLOAD_FOLDER'] = 'static/uploads/'
 app.config['MODEL_CLASSIFICATION'] = './models/model.h5'
 app.config['GCS_CREDENTIALS'] = './credentials/gcs.json'
@@ -33,7 +33,7 @@ def allowed_file(filename):
         filename.rsplit('.', 1)[1] in app.config['ALLOWED_EXTENSIONS']
 
 
-classes = ['Coris julis', 'Trigloporus lastoviza', 'Mugil cephalus']
+classes = ['Coris julis', 'Trigloporus lastoviza', 'Mugil cephalus',]
 
 
 @app.route('/', methods=['GET'])
@@ -45,7 +45,7 @@ def index():
 
 @app.route('/predict', methods=['POST'])
 def predictions():
-    if request.method == 'post':
+    if request.method == 'POST':
         req_image = request.files['image']
         if req_image and allowed_file(req_image.filename):
             filename = secure_filename(req_image.filename)
@@ -65,7 +65,7 @@ def predictions():
                 'class': classes[np.argmax(classification_result)],
                 'probability': str(np.max(classification_result))
             }
-            # array -1 digunakan untuk mengambil nilai array paling terakhir
+            # array - 1 digunakan untuk mengambil nilai array paling terakhir
             image_name = image_path.split('/')[-1]
             blob = bucket.blob(
                 'images/' + str(random.randint(10000, 999999))+image_name)
@@ -96,4 +96,4 @@ def predictions():
 
 
 if __name__ == '__main__':
-    app.run(debug=True, host='0.0.0.0', port=int(os.environ.get('PORT', 8080)))
+    app.run(debug=True, host='0.0.0.0', port=3000)
