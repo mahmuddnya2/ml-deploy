@@ -3,24 +3,24 @@ steps:
     args:
       - "build"
       - "-t"
-      - "us-central1-docker.pkg.dev/$PROJECT_ID/ml-deploy-artifact/model-image:$COMMIT_SHA"
+      - "us-central1-docker.pkg.dev/$PROJECT_ID/ml-deploy-artifact/model-image"
       - "."
   - name: gcr.io/cloud-builders/docker
     args:
       - "push"
-      - "us-central1-docker.pkg.dev/$PROJECT_ID/ml-deploy-artifact/model-image:$COMMIT_SHA"
+      - "us-central1-docker.pkg.dev/$PROJECT_ID/ml-deploy-artifact/model-image"
   - name: gcr.io/cloud-builders/gcloud
     entrypoint: gcloud
     args:
       - "run"
       - "deploy"
       - "api-model"
-      - "--image=us-central1-docker.pkg.dev/$PROJECT_ID/ml-deploy-artifact/model-image:$COMMIT_SHA"
+      - "--image=us-central1-docker.pkg.dev/$PROJECT_ID/ml-deploy-artifact/model-image"
       - "--region=us-central1"
       - "--cpu=1"
       - "--memory=2048Mi"
       - "--allow-unauthenticated"
       - "--set-secrets=BUCKET_NAME=bucket_name:latest"
 images:
-  - "us-central1-docker.pkg.dev/$PROJECT_ID/ml-deploy-artifact/model-image:$COMMIT_SHA"
+  - "us-central1-docker.pkg.dev/$PROJECT_ID/ml-deploy-artifact/model-image"
 logsBucket: "gs://ml-deploy-110803/logs"
