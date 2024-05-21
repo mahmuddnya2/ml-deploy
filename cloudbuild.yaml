@@ -1,11 +1,11 @@
 steps:
-  - name: gcr.io/cloud-builders/dockers
+  - name: gcr.io/cloud-builders/docker
     args:
       - "build"
       - "-t"
       - "us-central1-docker.pkg.dev/ml-deployment-1108/ml-deploy-artifact/model-image:$COMMIT_SHA"
       - "."
-  - name: gcr.io/cloud-builders/dockers
+  - name: gcr.io/cloud-builders/docker
     args:
       - "push"
       - "us-central1-docker.pkg.dev/ml-deployment-1108/ml-deploy-artifact/model-image:$COMMIT_SHA"
