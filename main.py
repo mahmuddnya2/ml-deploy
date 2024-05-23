@@ -23,7 +23,7 @@ app.config['GCS_CREDENTIALS'] = './credentials/gcs.json'
 model_classification = tf.keras.models.load_model(
     app.config['MODEL_CLASSIFICATION'], compile=False)
 
-bucket_name = os.environ.get('BUCKET_NAME', 'bjir-sharing-session')
+bucket_name = os.environ.get('BUCKET_NAME', 'ml-deploy-110803')
 client = storage.Client.from_service_account_json(
     json_credentials_path=app.config['GCS_CREDENTIALS'])
 bucket = storage.Bucket(client, bucket_name)
